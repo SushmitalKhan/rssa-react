@@ -17,7 +17,7 @@ class RatingPage extends Component {
 
         this.state = {
             raterDateTime: undefined,
-            userid: this.props.location.state.userid,
+            // userid: this.props.location.state.userid,
             pageid: 4,
             stepsEnabled: true,
             initialStep: 0,
@@ -38,9 +38,10 @@ class RatingPage extends Component {
             ],
             count: 0,
             ratedLst: [],
-            updateSuccess: false
+            goToNext: false
         };
-        this.updateSurvey = this.updateSurveyResponse.bind(this);
+        // this.updateSurvey = this.updateSurveyResponse.bind(this);
+        this.nextPage = this.nextPage.bind(this);
     }
 
     componentDidMount() {
@@ -80,15 +81,20 @@ class RatingPage extends Component {
         });
     }
 
+    nextPage(){
+        this.setState({
+            goToNext: true
+        });
+    }
+
     render() {
-        let userid = this.state.userid;
+        // let userid = this.state.userid;
         let ratings = this.state.ratedLst;
-        if (this.state.updateSuccess) {
+        if (this.state.goToNext) {
             return (
                 <Redirect to={{
-                    pathname: "/raterecommendations1",
+                    pathname: "/prefs",
                     state: {
-                        userid: userid,
                         ratings: ratings
                     }
                 }} />
@@ -135,7 +141,7 @@ class RatingPage extends Component {
                     </div>
                         <Button variant="primary" size="lg" style={{height: "fit-content", marginTop: "1em"}} 
                             className="next-button footer-btn" disabled={disabled}
-                            onClick={this.updateSurvey}>
+                            onClick={this.nextPage}>
                             Next
                         </Button>
                 </div>
